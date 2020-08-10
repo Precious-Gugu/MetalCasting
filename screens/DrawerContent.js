@@ -13,8 +13,10 @@ import {
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { color } from "react-native-reanimated";
+import { AuthContext } from "../components/context";
 
 export function DrawerContent(props) {
+  const { signOut } = React.useContext(AuthContext);
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
@@ -75,7 +77,7 @@ export function DrawerContent(props) {
           )}
           label="Sign Out"
           onPress={() => {
-            props.navigation.navigate("SplashScreen");
+            signOut();
           }}
         />
       </Drawer.Section>

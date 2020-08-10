@@ -23,6 +23,8 @@ import HomeScreen from "./HomeScreen";
 import App from "../App";
 import EnquiryScreen from "./EnquiryScreen";
 
+import { AuthContext } from "../components/context";
+
 const SignInScreen = ({ navigation }) => {
   const [data, setData] = React.useState({
     username: "",
@@ -33,6 +35,7 @@ const SignInScreen = ({ navigation }) => {
     isValidPassword: true,
   });
 
+  const { signIn } = React.useContext(AuthContext);
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
       setData({
@@ -72,6 +75,10 @@ const SignInScreen = ({ navigation }) => {
       ...data,
       secureTextEntry: !data.secureTextEntry,
     });
+  };
+
+  const loginHandle = (username, password) => {
+    signIn(username, password);
   };
 
   return (
@@ -123,8 +130,17 @@ const SignInScreen = ({ navigation }) => {
             )}
           </TouchableOpacity>
         </View>
+
+        <TouchableOpacity>
+          <Text style={{ color: "#853500", marginTop: 15 }}>
+            Forgot Password
+          </Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
-          onPress={() => navigation.navigate(MainTabScreen)}
+          onPress={() => {
+            loginHandle(data.username, data.password);
+          }}
           style={[
             styles.signIn,
             { backgroundColor: "#cb5c0d" },
